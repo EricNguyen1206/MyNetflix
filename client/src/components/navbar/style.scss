@@ -1,0 +1,14 @@
+.navbar {
+    color: white;
+    font-size: 14px;
+
+    .container {
+        padding: 0 50px;
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        .img {
+            height: 25px;
+        }
+    }
+}
