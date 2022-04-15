@@ -41,7 +41,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
     if (req.user && req.user.isAdmin) {
-      await new MovieModel.findByIdAndDelete(req.params.id);
+      await MovieModel.findByIdAndDelete(req.params.id);
 
       return res.status(200).json("The movie has been deleted");
     } else {
