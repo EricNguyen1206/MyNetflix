@@ -2,6 +2,9 @@ const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
+const movieRoute = require("./routes/movie");
+const listRoute = require("./routes/list");
 
 const app = express();
 
@@ -19,6 +22,9 @@ mongoose
   });
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/movies", movieRoute);
+app.use("/api/lists", listRoute);
 
 const port = process.env.PORT || 5000;
 

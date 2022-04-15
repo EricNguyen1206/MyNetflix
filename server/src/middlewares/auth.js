@@ -1,4 +1,4 @@
-const jwt = require(jsonwebtoken);
+const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
   const accessToken = req.headers && req.headers["x-access-token"];
@@ -11,9 +11,10 @@ const verifyToken = (req, res, next) => {
   jwt.verify(accessToken, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(403).json("Token is invalid!");
-      req.user = decoded;
-      next();
     }
+
+    req.user = decoded;
+    next();
   });
 };
 
