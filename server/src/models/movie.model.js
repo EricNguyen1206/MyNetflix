@@ -12,7 +12,7 @@ const MovieSchema = new mongoose.Schema(
     year: { type: String },
     limit: { type: Number },
     genre: { type: String },
-    IsSeries: { type: Boolean, default: false },
+    isSeries: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
