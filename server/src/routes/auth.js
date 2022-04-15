@@ -10,8 +10,6 @@ const secretKeyHash = "MyNetflix";
 
 router.post("/register", async (req, res) => {
   try {
-    console.log("req", req.body);
-
     const newUser = new UserModel({
       username: req.body.username,
       email: req.body.email,
