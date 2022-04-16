@@ -3,7 +3,7 @@ import {
     ArrowForwardIosOutlined,
 } from "@material-ui/icons";
 import { useRef, useState } from "react";
-import ListItem from "../listItem";
+import ListItem from "../ListItem";
 import "./style.scss";
 
 export default function List({ list }) {
