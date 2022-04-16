@@ -8,6 +8,7 @@
         font-weight: 500;
         margin-left: 50px;
     }
+
     .wrapper {
         position: relative;
         .sliderArrow {
@@ -23,11 +24,11 @@
             cursor: pointer;
     
             &.left {
-            left: 0;
+                left: 0;
             }
     
             &.right {
-            right: 0;
+                right: 0;
             }
         }
         .container {
