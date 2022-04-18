@@ -23,6 +23,7 @@ const Home = ({ type }) => {
                         },
                     }
                 );
+                console.log("res random list:", res);
                 setLists(res.data);
             } catch (err) {
                 console.log(err);
