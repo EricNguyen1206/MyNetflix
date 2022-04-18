@@ -1,15 +1,14 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "./style.scss";
 import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
-import avatarsrc from "../../assets/img/avatar.png";
-import netflixsrc from "../../assets/img/netflix.png";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../authContext/AuthContext";
-import { logout } from "../../authContext/AuthActions";
+import { useAuth } from "../../context";
+import { logout } from "../../context/auth/action";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const { dispatch } = useContext(AuthContext);
+    // const { dispatch } = useContext(AuthContext);
+    const [, dispatch] = useAuth();
 
     window.onscroll = () => {
         setIsScrolled(window.pageYOffset === 0 ? false : true);

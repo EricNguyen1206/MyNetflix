@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
-import { login } from "../../authContext/apiCalls";
-import { AuthContext } from "../../authContext/AuthContext";
+import { useState } from "react";
+import { login } from "../../context/auth/action";
+import { useAuth } from "../../context";
 import "./style.scss";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { dispatch } = useContext(AuthContext);
+    // const { dispatch } = useContext(AuthContext);
+    const [, dispatch] = useAuth();
 
     const handleLogin = (e) => {
         e.preventDefault();
