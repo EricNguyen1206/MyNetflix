@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../../context/auth/action";
 import { useAuth } from "../../context";
 import "./style.scss";
@@ -6,8 +7,14 @@ import "./style.scss";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const { dispatch } = useContext(AuthContext);
-    const [, dispatch] = useAuth();
+    const [state, dispatch] = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (state.user && !state.error) {
+            navigate("/");
+        }
+    }, [state.user]);
 
     const handleLogin = (e) => {
         e.preventDefault();

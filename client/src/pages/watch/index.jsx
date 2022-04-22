@@ -1,4 +1,5 @@
 import { ArrowBackOutlined } from "@material-ui/icons";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./style.scss";
 
@@ -18,8 +19,8 @@ export default function Watch() {
                 autoPlay
                 progress
                 controls
-                src={movie.video}
-            />
+                src="https://cdn.hipwallpaper.com/i/98/21/dUyCkp.jpg"
+            ></video>
         </div>
     );
 }

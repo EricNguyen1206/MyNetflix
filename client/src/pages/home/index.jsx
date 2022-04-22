@@ -16,14 +16,12 @@ const Home = ({ type }) => {
                     }`,
                     {
                         headers: {
-                            token:
-                                "Bearer " +
-                                JSON.parse(localStorage.getItem("user"))
-                                    .accessToken,
+                            "x-access-token": JSON.parse(
+                                localStorage.getItem("user")
+                            ).accessToken,
                         },
                     }
                 );
-                console.log("res random list:", res);
                 setLists(res.data);
             } catch (err) {
                 console.log(err);
@@ -36,8 +34,8 @@ const Home = ({ type }) => {
         <div className="home">
             <Navbar />
             <Featured type={type} setGenre={setGenre} />
-            {lists.map((list) => (
-                <List list={list} />
+            {lists.map((list, index) => (
+                <List key={index} list={list} />
             ))}
         </div>
     );
