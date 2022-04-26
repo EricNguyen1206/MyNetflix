@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
+import logo from "../../assets/img/netflix.png";
 
 export default function Register() {
     const [email, setEmail] = useState("");

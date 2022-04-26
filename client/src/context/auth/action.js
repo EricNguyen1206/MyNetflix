@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api";
 import * as actionTypes from "./constant";
 
 export const loginStart = () => ({
@@ -21,9 +21,11 @@ export const logout = () => ({
 export const login = async (user, dispatch) => {
     dispatch(loginStart());
     try {
-        const res = await axios.post("auth/login", user);
+        const res = await api.post("auth/login", user);
         dispatch(loginSuccess(res.data));
+        console.log("success:", user);
     } catch (err) {
+        console.log("fail");
         dispatch(loginFailure());
     }
 };

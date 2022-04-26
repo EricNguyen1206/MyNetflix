@@ -24,9 +24,7 @@ export const getAllUsers = async (dispatch) => {
             },
         });
         dispatch(getAllUsersFulfilled(res.data));
-        console.log("get user success:", res.data);
     } catch (err) {
-        console.log("get user fail");
         dispatch(getAllUsersRejectted());
     }
 };

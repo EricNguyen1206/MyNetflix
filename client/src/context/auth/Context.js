@@ -7,7 +7,7 @@ const Provider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initState);
 
     useEffect(() => {
-        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.getItem("user", JSON.stringify(state.user));
     }, [state.user]);
 
     return (

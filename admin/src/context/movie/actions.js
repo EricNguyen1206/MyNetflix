@@ -84,9 +84,8 @@ export const getMovies = async (dispatch) => {
     try {
         const res = await api.get("/movies", {
             headers: {
-                token:
-                    "Bearer " +
-                    JSON.parse(localStorage.getItem("user")).accessToken,
+                "x-access-token": JSON.parse(localStorage.getItem("user"))
+                    .accessToken,
             },
         });
         dispatch(getMoviesSuccess(res.data));
@@ -101,9 +100,8 @@ export const createMovie = async (movie, dispatch) => {
     try {
         const res = await api.post("/movies", movie, {
             headers: {
-                token:
-                    "Bearer " +
-                    JSON.parse(localStorage.getItem("user")).accessToken,
+                "x-access-token": JSON.parse(localStorage.getItem("user"))
+                    .accessToken,
             },
         });
         dispatch(createMovieSuccess(res.data));
@@ -118,9 +116,8 @@ export const deleteMovie = async (id, dispatch) => {
     try {
         await api.delete("/movies/" + id, {
             headers: {
-                token:
-                    "Bearer " +
-                    JSON.parse(localStorage.getItem("user")).accessToken,
+                "x-access-token": JSON.parse(localStorage.getItem("user"))
+                    .accessToken,
             },
         });
         dispatch(deleteMovieSuccess(id));

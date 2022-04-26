@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../../context/auth/action";
 import { useAuth } from "../../context";
 import "./style.scss";
+import logo from "../../assets/img/netflix.png";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const { dispatch } = useContext(AuthContext);
-    const [, dispatch] = useAuth();
+    const [state, dispatch] = useAuth();
+    // useEffect(()=> {
 
+    // },[state.user])
     const handleLogin = (e) => {
         e.preventDefault();
         login({ email, password }, dispatch);

@@ -15,7 +15,7 @@ export default function Home() {
         if (!user) {
             navigate("/login");
         }
-    });
+    }, [user]);
     return (
         <div className="home">
             <FeaturedInfo />

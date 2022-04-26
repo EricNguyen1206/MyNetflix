@@ -1,5 +1,5 @@
 {
-    "name": "lamaadmin",
+    "name": "ericnguyen",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -17,6 +17,7 @@
         "recharts": "^2.0.9",
         "sass": "^1.50.1",
         "web-vitals": "^1.0.1",
+        "webpack": "^5.72.0",
         "yarn": "^1.22.18"
     },
     "scripts": {

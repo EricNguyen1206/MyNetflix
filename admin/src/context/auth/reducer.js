@@ -15,6 +15,7 @@ const reducer = (state, action) => {
                 error: false,
             };
         case actionTypes.LOGIN_FULFILL:
+            localStorage.setItem("user", action.user);
             return {
                 user: action.payload,
                 isFetching: false,

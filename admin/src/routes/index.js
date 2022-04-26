@@ -29,7 +29,7 @@ const routeAuth = [
 
 const routeUser = [
     {
-        exact: true,
+        exact: false,
         path: "/users",
         element: <UserList />,
     },

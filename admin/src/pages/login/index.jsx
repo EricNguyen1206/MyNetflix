@@ -40,7 +40,7 @@ const Login = () => {
                 <button
                     className="btn btn-login"
                     onClick={handleLogin}
-                    // disabled={isFetching}
+                    disabled={state.isFetching}
                 >
                     Login
                 </button>
