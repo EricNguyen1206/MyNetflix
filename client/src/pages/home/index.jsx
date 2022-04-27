@@ -2,6 +2,7 @@ import { Navbar, Featured, List } from "../../components";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api";
 
 const Home = ({ type }) => {
     const [lists, setLists] = useState([]);
@@ -10,16 +11,15 @@ const Home = ({ type }) => {
     useEffect(() => {
         const getRandomLists = async () => {
             try {
-                const res = await axios.get(
+                const res = await api.get(
                     `lists${type ? "?type=" + type : ""}${
                         genre ? "&genre=" + genre : ""
                     }`,
                     {
                         headers: {
-                            token:
-                                "Bearer " +
-                                JSON.parse(localStorage.getItem("user"))
-                                    .accessToken,
+                            "x-access-token": JSON.parse(
+                                localStorage.getItem("user")
+                            ).accessToken,
                         },
                     }
                 );
@@ -36,8 +36,8 @@ const Home = ({ type }) => {
         <div className="home">
             <Navbar />
             <Featured type={type} setGenre={setGenre} />
-            {lists.map((list) => (
-                <List list={list} />
+            {lists.map((list, index) => (
+                <List key={index} list={list} />
             ))}
         </div>
     );

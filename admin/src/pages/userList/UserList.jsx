@@ -9,8 +9,12 @@ import { getAllUsers } from "../../context/users/action";
 
 export default function UserList() {
     const [data, setData] = useState(userRows);
-    const [{ users }, dispatch] = useUsers();
-    console.log("user in userlist:", users);
+
+    const [state, dispatch] = useUsers();
+    let users = state.users ? state.users.reverse().slice(0, 5) : [];
+    useEffect(() => {
+        getAllUsers(dispatch);
+    }, []);
 
     const handleDelete = (id) => {
         setData(data.filter((item) => item._id !== id));

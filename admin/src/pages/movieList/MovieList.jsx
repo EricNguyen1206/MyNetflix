@@ -4,14 +4,18 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useMovie } from "../../context";
-import { deleteMovie, getMovies } from "../../context/movie/actions";
+import { deleteMovie, getAllMovies } from "../../context/movie/actions";
 
 export default function MovieList() {
-    const [{ movies }, dispatch] = useMovie();
-    console.log("movie in movie list:", movies);
+    const [state, dispatch] = useMovie();
+    const movies = state.movies || [];
     const handleDelete = (id) => {
         deleteMovie(id, dispatch);
     };
+
+    useEffect(() => {
+        getAllMovies(dispatch);
+    }, []);
 
     const columns = [
         { field: "_id", headerName: "ID", width: 90 },

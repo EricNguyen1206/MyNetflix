@@ -1,29 +1,51 @@
 import React from "react";
 import "./topbar.css";
-import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { ExitToAppOutlined } from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import avartarDefault from "../../assets/image/avatar-default.jpg";
+import { logout } from "../../context/auth/action";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context";
 
 export default function Topbar() {
-  return (
-    <div className="topbar">
-      <div className="topbarWrapper">
-        <div className="topLeft">
-          <span className="logo">lamaadmin</span>
+    const [state, dispatch] = useAuth();
+    const user = state.user;
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        await logout();
+
+        navigate("/login");
+    };
+    return (
+        <div className="topbar">
+            <div className="topbarWrapper">
+                <div className="topLeft">
+                    <Link to="/">
+                        <span className="logo">MyNetflix Admin</span>
+                    </Link>
+                </div>
+                <div className="topRight">
+                    <span className="username">{user.username}</span>
+                    <img
+                        src={avartarDefault}
+                        alt="Avatar"
+                        className="topAvatar"
+                    />
+                    <div className="topbarIconContainer">
+                        <button
+                            onClick={handleLogout}
+                            style={{
+                                backgroundColor: "transparent",
+                                border: "none",
+                                padding: 0,
+                                fontSize: "inherit",
+                            }}
+                        >
+                            <ExitToAppOutlined />
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="topRight">
-          <div className="topbarIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Settings />
-          </div>
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

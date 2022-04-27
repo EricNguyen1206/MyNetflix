@@ -14,7 +14,8 @@ const reducer = (state, action) => {
                 error: false,
             };
         case actionTypes.LOGIN_SUCCESS:
-            localStorage.setItem("user", action.user);
+            console.log("LOGIN SUCCESS:", action.payload);
+            localStorage.setItem("user", JSON.stringify(action.payload));
             return {
                 user: action.payload,
                 isFetching: false,

@@ -22,12 +22,20 @@ export const getAllMovies = async (dispatch) => {
             },
         });
         dispatch(getAllMovieFulfilled(res.data));
-        console.log("success");
     } catch (err) {
-        console.log("fail");
         dispatch(getAllMovieRejected());
     }
 };
+export const getMovieByIdPending = () => ({
+    type: "GET_MOVIES_BYID_PENDING",
+});
+const getMovieByIdFulfilled = (movie) => ({
+    type: "GET_MOVIES_BYID_FULFILED",
+    payload: movie,
+});
+const getMovieByIdRejected = () => ({
+    type: "GET_MOVIES_BYID_REJECTED",
+});
 export const getMoviesStart = () => ({
     type: "GET_MOVIES_START",
 });
@@ -91,6 +99,20 @@ export const getMovies = async (dispatch) => {
         dispatch(getMoviesSuccess(res.data));
     } catch (err) {
         dispatch(getMoviesFailure());
+    }
+};
+export const getMovieById = async (id, dispatch) => {
+    dispatch(getMovieByIdPending());
+    try {
+        const res = await api.get("/movies/find/" + id, {
+            headers: {
+                "x-access-token": JSON.parse(localStorage.getItem("user"))
+                    .accessToken,
+            },
+        });
+        dispatch(getMovieByIdFulfilled(res.data));
+    } catch (err) {
+        dispatch(getMovieByIdRejected());
     }
 };
 

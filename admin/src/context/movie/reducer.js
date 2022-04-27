@@ -44,6 +44,24 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: false,
             };
+        case "GET_MOVIE_BYID_PENDING":
+            return {
+                movies: [],
+                isFetching: true,
+                error: false,
+            };
+        case "GET_MOVIES_BYID_FULFILED":
+            return {
+                movies: action.payload,
+                isFetching: false,
+                error: false,
+            };
+        case "GET_MOVIES_BYID_REJECTED":
+            return {
+                movies: [],
+                isFetching: false,
+                error: true,
+            };
         case "GET_MOVIES_START":
             return {
                 movies: [],

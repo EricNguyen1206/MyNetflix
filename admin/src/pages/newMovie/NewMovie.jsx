@@ -21,42 +21,60 @@ export default function NewMovie() {
         setMovie({ ...movie, [e.target.name]: value });
     };
 
-    // const upload = (items) => {
-    //     items.forEach((item) => {
-    //         const fileName = new Date().getTime() + item.label + item.file.name;
-    //         const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
-    //         uploadTask.on(
-    //             "state_changed",
-    //             (snapshot) => {
-    //                 const progress =
-    //                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //                 console.log("Upload is " + progress + "% done");
-    //             },
-    //             (error) => {
-    //                 console.log(error);
-    //             },
-    //             () => {
-    //                 uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-    //                     setMovie((prev) => {
-    //                         return { ...prev, [item.label]: url };
-    //                     });
-    //                     setUploaded((prev) => prev + 1);
-    //                 });
-    //             }
-    //         );
-    //     });
-    // };
+    const upload = (items) => {
+        items.forEach((item) => {
+            const fileName = new Date().getTime() + item.label + item.file.name;
+            // const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+            // uploadTask.on(
+            //     "state_changed",
+            //     (snapshot) => {
+            //         const progress =
+            //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            //         console.log("Upload is " + progress + "% done");
+            //     },
+            //     (error) => {
+            //         console.log(error);
+            //     },
+            //     () => {
+            //         uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            //             setMovie((prev) => {
+            //                 return { ...prev, [item.label]: url };
+            //             });
+            //             setUploaded((prev) => prev + 1);
+            //         });
+            //     }
+            // );
+        });
+    };
 
-    // const handleUpload = (e) => {
-    //     e.preventDefault();
-    //     upload([
-    //         { file: img, label: "img" },
-    //         { file: imgTitle, label: "imgTitle" },
-    //         { file: imgSm, label: "imgSm" },
-    //         { file: trailer, label: "trailer" },
-    //         { file: video, label: "video" },
-    //     ]);
-    // };
+    function createToast() {
+        let toast = document.createElement("div");
+        toast.className = `toast success`;
+
+        toast.innerHTML = `
+        <span class="msg">Tính năng đang phát triển!</span>
+        <span class="countdown"></span>
+        `;
+        document.querySelector("#toasts").appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = "hide_slide 1s ease forwards";
+        }, 4000);
+        setTimeout(() => {
+            toast.remove();
+        }, 6000);
+    }
+
+    const handleUpload = (e) => {
+        e.preventDefault();
+        upload([
+            { file: img, label: "img" },
+            { file: imgTitle, label: "imgTitle" },
+            { file: imgSm, label: "imgSm" },
+            { file: trailer, label: "trailer" },
+            { file: video, label: "video" },
+        ]);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -177,12 +195,22 @@ export default function NewMovie() {
                 </div>
                 {uploaded === 5 ? (
                     // <button className="addProductButton" onClick={handleSubmit}>
-                    <button className="addProductButton">Create</button>
+                    <button className="addProductButton" onClick={createToast}>
+                        Create
+                    </button>
                 ) : (
                     // <button className="addProductButton" onClick={handleUpload}>
-                    <button className="addProductButton">Upload</button>
+                    <button className="addProductButton" onClick={createToast}>
+                        Upload
+                    </button>
                 )}
             </form>
+            <div id="toasts">
+                {/* <div className="toast success">
+                    !<span className="msg">Tính năng đang phát triển</span>
+                    <span className="countdown"></span>
+                </div> */}
+            </div>
         </div>
     );
 }

@@ -1,5 +1,7 @@
 import "./widgetLg.css";
 import { useMovie } from "../../context";
+import { useEffect } from "react";
+import { getAllMovies } from "../../context/movie/actions";
 
 export default function WidgetLg() {
     const [state, dispatch] = useMovie();
@@ -7,6 +9,9 @@ export default function WidgetLg() {
     const Button = ({ type }) => {
         return <button className={"widgetLgButton " + type}>{type}</button>;
     };
+    useEffect(() => {
+        getAllMovies(dispatch);
+    }, []);
     return (
         <div className="widgetLg">
             <h3 className="widgetLgTitle">New Movies</h3>

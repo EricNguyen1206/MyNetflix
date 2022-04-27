@@ -27,10 +27,18 @@
     align-items: center;
 }
 
+.username {
+  font-size: 1.2rem;
+  font-family: "Roboto", "Helvetica Neue", "sans-serif";
+  font-weight: bold;
+  margin-right: 5px;
+  transform: translateY(-20%);
+}
+
 .topbarIconContainer {
   position: relative;
   cursor: pointer;
-  margin-right: 10px;
+  margin-left: 10px;
   color: #555;
 }
 

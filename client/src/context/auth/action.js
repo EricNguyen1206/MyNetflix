@@ -20,10 +20,10 @@ export const logout = () => ({
 
 export const login = async (user, dispatch) => {
     dispatch(loginStart());
+    console.log("check:", user);
     try {
         const res = await api.post("auth/login", user);
         dispatch(loginSuccess(res.data));
-        console.log("success:", user);
     } catch (err) {
         console.log("fail");
         dispatch(loginFailure());

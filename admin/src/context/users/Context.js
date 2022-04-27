@@ -6,9 +6,6 @@ const Context = createContext();
 
 const Provider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initState);
-    useEffect(() => {
-        getAllUsers(dispatch);
-    }, []);
     return (
         <Context.Provider value={[state, dispatch]}>
             {children}

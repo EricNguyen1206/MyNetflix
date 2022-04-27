@@ -1,17 +1,74 @@
 import {
     CalendarToday,
-    LocationSearching,
     MailOutline,
     PermIdentity,
     PhoneAndroid,
     Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./style.scss";
-import { useUsers } from "../../context";
+import React, { useState, useEffect } from "react";
+import api from "../../api";
 
-export default function User() {
-    const [{ users }, dispatch] = useUsers();
+export default React.memo(function User() {
+    const [user, setUser] = useState({});
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [admin, setAdmin] = useState(false);
+    const [avt, setAvt] = useState(null);
+    const id = useParams();
+    useEffect(() => {
+        let isMounted = true;
+        async function getUserById(setData) {
+            try {
+                const res = await api.get("users/find/" + id.userId, {
+                    headers: {
+                        "x-access-token": JSON.parse(
+                            localStorage.getItem("user")
+                        ).accessToken,
+                    },
+                });
+                if (isMounted) {
+                    setData(res.data); // no more error
+                    setUsername(res.data.username);
+                    setEmail(res.data.email);
+                    setAdmin(res.data.isAdmin);
+                    setAvt(res.data.profilePic);
+                }
+            } catch (err) {
+                console.log("err:", err);
+            }
+        }
+        getUserById(setUser);
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+    const handleChange = (e) => {
+        setAdmin(e.target.value);
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let file = new FormData();
+        avt && file.append("image", avt);
+        const newUser = {
+            username,
+            email,
+            profilePic: file,
+            isAdmin: admin,
+        };
+        console.log("newUser:", newUser);
+        try {
+            api.put("/users/" + id.userId, newUser, {
+                headers: {
+                    "x-access-token": JSON.parse(localStorage.getItem("user"))
+                        .accessToken,
+                },
+            }).then((res) => console.log("sucess:", res.data));
+        } catch (e) {
+            console.log("error:", e);
+        }
+    };
     return (
         <div className="user">
             <div className="userTitleContainer">
@@ -24,7 +81,11 @@ export default function User() {
                 <div className="userShow">
                     <div className="userShowTop">
                         <img
-                            src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                            src={
+                                avt
+                                    ? URL.createObjectURL(avt)
+                                    : "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                            }
                             alt=""
                             className="userShowImg"
                         />
@@ -42,32 +103,26 @@ export default function User() {
                         <div className="userShowInfo">
                             <PermIdentity className="userShowIcon" />
                             <span className="userShowInfoTitle">
-                                annabeck99
+                                {user.username}
                             </span>
                         </div>
                         <div className="userShowInfo">
                             <CalendarToday className="userShowIcon" />
                             <span className="userShowInfoTitle">
-                                10.12.1999
+                                {user.createdAt}
                             </span>
                         </div>
                         <span className="userShowTitle">Contact Details</span>
                         <div className="userShowInfo">
                             <PhoneAndroid className="userShowIcon" />
                             <span className="userShowInfoTitle">
-                                +1 123 456 67
+                                {`Is Admin: ${user.isAdmin}`}
                             </span>
                         </div>
                         <div className="userShowInfo">
                             <MailOutline className="userShowIcon" />
                             <span className="userShowInfoTitle">
-                                annabeck99@gmail.com
-                            </span>
-                        </div>
-                        <div className="userShowInfo">
-                            <LocationSearching className="userShowIcon" />
-                            <span className="userShowInfoTitle">
-                                New York | USA
+                                {user.email}
                             </span>
                         </div>
                     </div>
@@ -80,49 +135,70 @@ export default function User() {
                                 <label>Username</label>
                                 <input
                                     type="text"
-                                    placeholder="annabeck99"
+                                    placeholder="Example"
                                     className="userUpdateInput"
-                                />
-                            </div>
-                            <div className="userUpdateItem">
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="Anna Becker"
-                                    className="userUpdateInput"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
                                 />
                             </div>
                             <div className="userUpdateItem">
                                 <label>Email</label>
                                 <input
                                     type="text"
-                                    placeholder="annabeck99@gmail.com"
+                                    placeholder="example@gmail.com"
                                     className="userUpdateInput"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
-                            <div className="userUpdateItem">
-                                <label>Phone</label>
-                                <input
-                                    type="text"
-                                    placeholder="+1 123 456 67"
-                                    className="userUpdateInput"
-                                />
-                            </div>
-                            <div className="userUpdateItem">
-                                <label>Address</label>
-                                <input
-                                    type="text"
-                                    placeholder="New York | USA"
-                                    className="userUpdateInput"
-                                />
+                            <div className="userUpdateItem userUpdateRole">
+                                <label>Admin</label>
+                                <div style={{ display: "flex" }}>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                        }}
+                                    >
+                                        <input
+                                            type="radio"
+                                            id="true"
+                                            value={true}
+                                            onChange={handleChange}
+                                            name="isAdmin"
+                                        />
+                                        <label htmlFor="true">True</label>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            marginLeft: "40px",
+                                        }}
+                                    >
+                                        <input
+                                            type="radio"
+                                            id="false"
+                                            value={false}
+                                            onChange={handleChange}
+                                            name="isAdmin"
+                                        />
+                                        <label htmlFor="false">False</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="userUpdateRight">
                             <div className="userUpdateUpload">
                                 <img
                                     className="userUpdateImg"
-                                    src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                                    alt=""
+                                    // style={{ width: "500px" }}
+                                    src={
+                                        avt
+                                            ? URL.createObjectURL(avt)
+                                            : "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                                    }
+                                    alt="Avatar"
                                 />
                                 <label htmlFor="file">
                                     <Publish className="userUpdateIcon" />
@@ -131,13 +207,23 @@ export default function User() {
                                     type="file"
                                     id="file"
                                     style={{ display: "none" }}
+                                    name="Avartar"
+                                    onChange={(event) => {
+                                        console.log(event.target.files[0]);
+                                        setAvt(event.target.files[0]);
+                                    }}
                                 />
                             </div>
-                            <button className="userUpdateButton">Update</button>
+                            <button
+                                className="userUpdateButton"
+                                onClick={handleSubmit}
+                            >
+                                Update
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     );
-}
+});

@@ -2,11 +2,14 @@ import "./widgetSm.css";
 import { Visibility } from "@material-ui/icons";
 import { useUsers } from "../../context";
 import { useEffect } from "react";
+import { getAllUsers } from "../../context/users/action";
 
 export default function WidgetSm() {
     const [state, dispatch] = useUsers();
     let users = state.users ? state.users.reverse().slice(0, 5) : [];
-    console.log("check render");
+    useEffect(() => {
+        getAllUsers(dispatch);
+    }, []);
     return (
         <div className="widgetSm">
             <span className="widgetSmTitle">New Join Members</span>

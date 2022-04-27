@@ -7,6 +7,7 @@ import WidgetLg from "../../components/widgetLg/WidgetLg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../context";
+import { getAllMovies } from "../../context/movie/actions";
 
 export default function Home() {
     const [{ user }, dispatch] = useAuth();

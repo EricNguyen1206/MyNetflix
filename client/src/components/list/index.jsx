@@ -38,7 +38,7 @@ export default function List({ list }) {
                 />
                 <div className="container" ref={listRef}>
                     {list.content.map((item, i) => (
-                        <ListItem index={i} item={item} />
+                        <ListItem key={i} item={item} />
                     ))}
                 </div>
                 <ArrowForwardIosOutlined

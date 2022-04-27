@@ -44,6 +44,24 @@ const reducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
+        case actionTypes.UPDATE_USER_PENDING:
+            return {
+                users: null,
+                isFetching: true,
+                error: false,
+            };
+        case actionTypes.UPDATE_USER_FULFILED:
+            return {
+                users: action.payload,
+                isFetching: false,
+                error: false,
+            };
+        case actionTypes.UPDATE_USER_REJECTED:
+            return {
+                users: null,
+                isFetching: false,
+                error: true,
+            };
         default:
             return { ...state };
     }
